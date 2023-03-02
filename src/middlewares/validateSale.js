@@ -1,8 +1,18 @@
-const listSaleById = require('../services/serviceSale');
-
 module.exports = async (req, res, next) => {
-  const { id } = req.params;
-  const checkId = await listSaleById.listSaleById(id);
-  if (!id || checkId.length === 0) { return res.status(404).send({ message: 'Sale not found' }); }
+  const products = req.body;
+  if (products.find((item) => !item.productId)) {
+    return res.status(400).json({ message: '"productId" is required' });
+  }
+
+  if (products.find((item) => item.quantity < 1)) {
+    return res
+      .status(422)
+      .json({ message: '"quantity" must be greater than or equal to 1' });
+  }
+
+  if (products.find((item) => !item.quantity)) {
+    return res.status(400).json({ message: '"quantity" is required' });
+  }
+
   next();
 };

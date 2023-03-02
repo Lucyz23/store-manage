@@ -15,7 +15,9 @@ const listAllSales = async (req, res) => {
 const listSaleById = async (req, res) => {
   const { id } = req.params;
   const saleById = await service.listSaleById(id);
-  if (saleById.length === 0) { return res.status(404).json({ message: 'Sale not found' }); }
+  if (saleById.length === 0) {
+    return res.status(404).json({ message: 'Sale not found' });
+  }
   return res.status(200).json(saleById);
 };
 

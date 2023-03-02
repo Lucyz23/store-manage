@@ -1,8 +1,8 @@
-const productServices = require('../services/productsService');
+const productService = require('../services/productsService');
 
 module.exports = async (req, res, next) => {
     const { id } = req.params;
-    const getId = await productServices.listAll();
+    const getId = await productService.getAll();
     const checkId = getId.map((item) => item.id);
 
   if (!checkId.includes(Number(id))) {
